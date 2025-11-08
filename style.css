@@ -1,75 +1,91 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Quicksand', 'san-serif';
-    box-sizing: border-box;
-    }
- body{
-    background-image: url('https://csslaval.gouv.qc.ca/wp-content/uploads/2021/06/shutterstock_1833355678.png');
-    } 
-
-    .app{
- background: darkblue;
- width: 90%;
- max-width: 600px;
- margin: 100px auto 0;
- border-radius: 10px; 
- padding: 30px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 50px;
 }
 
-.app h1{
-  font-size: 25px;
-  color: black;
-  font-weight: 600;
-  border-bottom: 1px solid;
-  padding-bottom: 30px;
-}
-.quiz{
-    padding: 20px 0;
+.app {
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.quiz h2{
-font-size: 18px;
-color: aliceblue;
-font-weight: 600;
+h1 {
+    color: #333;
 }
 
-.btn{
-    background: white;
-    color: black;
-    font-weight: 600;
-    width: 100%;
-    border: 1px solid;
-    padding: 10px;
-    margin: 10px 0;
-    text-align: left;
-    border-radius: 4px;
+h2 {
+    margin-bottom: 20px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-.btn:hover{
-  background: green;
-  color: white;
+button:hover {
+    background-color: #f0f0f0;
 }
 
-#button2{
-    background: white;
-    color: black;
-    font-weight: 500;
-    width: 150px;
-    border: 0;
-    padding: 10px;
-    margin: 20px auto 0;
-    border-radius: 4px;
-    cursor: pointer;
+button.correct {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
 }
-#button2:hover{
-    background: green;
+
+button.inCorrect {
+    background-color: #f44336;
+    color: white;
+    border-color: #f44336;
+}
+
+button.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#button2 {
+    padding: 10px 30px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2196F3;
     color: white;
 }
-.correct{
-    background: green;
+
+#button2:hover {
+    background-color: #1976D2;
 }
-.inCorrect{
-    background: red;
+
+/* Animation for question container */
+.quiz {
+    transition: opacity 0.5s ease;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
 }

@@ -1,6 +1,7 @@
+const PORT = process.env.PORT || 3000;
 const questions = [
     {
-        question: " Which franchise has won more championships?",
+        question: "Which franchise has won more championships?",
         answers: [
             { text: "Boston Celtics", correct: false},
             { text: "The Yankees", correct: false},
@@ -20,23 +21,23 @@ const questions = [
     {
         question: "Which boxer is currently undefeated and STILL boxing?",
         answers: [
-            { text: "Ryan garcia", correct: false},
-            { text: "Tank davis", correct: true},
-            { text: "Floyd mayweather", correct: false},
+            { text: "Ryan Garcia", correct: false},
+            { text: "Tank Davis", correct: true},
+            { text: "Floyd Mayweather", correct: false},
             { text: "Canelo", correct: false},
         ]
     },
     {
-        question: " Who broke the record for most 3's in the NBA? ",
+        question: "Who broke the record for most 3's in the NBA?",
         answers: [
-            { text: "Steph curry", correct: false},
-            { text: "Michael jordan", correct: false},
+            { text: "Steph Curry", correct: false},
+            { text: "Michael Jordan", correct: false},
             { text: "Klay Thompson", correct: true},
             { text: "Ray Allen", correct: false},
         ]
     },
     {
-question: " How many games total are played in the NFL ",
+        question: "How many games total are played in the NFL?",
         answers: [
             { text: "600", correct: false},
             { text: "272", correct: true},
@@ -45,7 +46,7 @@ question: " How many games total are played in the NFL ",
         ]
     },
     {
-    question: " In motor racing, what color is the flag they wave to indicate winner? ",
+        question: "In motor racing, what color is the flag they wave to indicate winner?",
         answers: [
             { text: "Black", correct: false},
             { text: "White", correct: false},
@@ -54,17 +55,15 @@ question: " How many games total are played in the NFL ",
         ]
     },
     {
-      question: "Who is considered as (The Answer) in the NBA? ",
+        question: "Who is considered as (The Answer) in the NBA?",
         answers: [
             { text: "Michael Jordan", correct: false},
-            { text: "Tim duncan", correct: false},
-            { text: "Allen iverson", correct: true},
-            { text: "Wilt chamberlain", correct: false},
+            { text: "Tim Duncan", correct: false},
+            { text: "Allen Iverson", correct: true},
+            { text: "Wilt Chamberlain", correct: false},
         ]
     }
-
 ];
-
 
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
@@ -73,33 +72,49 @@ const nextButton = document.getElementById("button2");
 let currentQuestionIndex = 0;
 let score = 0;
 
-function startquiz(){
-   currentQuestionIndex = 0;
-   score = 0;
-   nextButton.innerHTML = "Next";
-   showQuestion();
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
 }
 
 function showQuestion(){
-    resetState();
-    let currentQuestion = questions[currentQuestionIndex];
-    let questionNo = currentQuestionIndex + 1;
-    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
-    
-   
-    currentQuestion.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.innerHTML = answer.text; 
-        button.classList.add("btn");
-        answerButtons.appendChild(button);
-        if(answer.correct){
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener("click", selectAnswer)
-     });
-    }
+    const quizContainer = document.querySelector(".quiz");
+    quizContainer.classList.add("fade-out");
 
+    setTimeout(() => {
+        resetState();
+        let currentQuestion = questions[currentQuestionIndex];
+        let questionNo = currentQuestionIndex + 1;
+        questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
+        currentQuestion.answers.forEach(answer => {
+            const button = document.createElement("button");
+            button.innerHTML = answer.text; 
+            button.classList.add("btn");
+            answerButtons.appendChild(button);
+            if(answer.correct){
+                button.dataset.correct = answer.correct;
+            }
+            button.addEventListener("click", selectAnswer);
+        });
+
+        // Animate buttons one by one
+        Array.from(answerButtons.children).forEach((btn, index) => {
+            setTimeout(() => {
+                btn.classList.add("show");
+            }, index * 100);
+        });
+
+        quizContainer.classList.remove("fade-out");
+        quizContainer.classList.add("fade-in");
+
+        setTimeout(() => {
+            quizContainer.classList.remove("fade-in");
+        }, 500);
+    }, 500);
+}
 
 function resetState(){
     nextButton.style.display = "none";
@@ -109,85 +124,56 @@ function resetState(){
 }
 
 function selectAnswer(e){
-      const selectedBtn = e.target;
-      const isCorrect = selectedBtn.dataset.correct === "true";
-      if(isCorrect){
-    selectedBtn.classList.add("correct");
-    score++;
-      }else{
-        selectedBtn.classList.add("inCorrect")
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    } else {
+        selectedBtn.classList.add("inCorrect");
     }
-   
+
     Array.from(answerButtons.children).forEach(button => {
-     if(button.dataset.correct === "true"){
-        button.classList.add("correct");
-     }
-     button.disabled = true;
-});
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
 
-
-nextButton.style.display = "block";
+    nextButton.style.display = "block";
 }
 
 function showScore(){
     resetState();
-   questionElement.innerHTML = `Your result is ${score}!! out of ${questions.length}! are you satisified?`;
+    questionElement.innerHTML = `Your result is ${score} out of ${questions.length}!`;
     nextButton.innerHTML = "Play Again?";
     nextButton.style.display = "block";
-   determineWinner();
-    
+    determineWinner();
 }
 
-
-function handlenextButton(){
+function handleNextButton(){
     currentQuestionIndex++;
-    if(currentQuestionIndex == 6){
-        determineWinner();
-    }
     if(currentQuestionIndex < questions.length){
         showQuestion();
-    }else{
+    } else {
         showScore();
     }
 }
 
-
-
-
 nextButton.addEventListener("click", ()=>{
     if(currentQuestionIndex < questions.length){
-        handlenextButton();
-    }else{
-      startquiz();
+        handleNextButton();
+    } else {
+        startQuiz();
     }
 });
- 
-
-
 
 function determineWinner(){
-    console.log(score);
-if (score <= 5) {
-    return (questionElement.innerHTML = `Your result is ${score}!! out of ${questions.length}! You lose are you satisified?`);
-}else {
-    
- return (questionElement.innerHTML = `Your result is ${score}!! out of ${questions.length}! You Win!! are you satisified?`);
-}
+    if(score <= 5){
+        questionElement.innerHTML += " You lose! Try again!";
+    } else {
+        questionElement.innerHTML += " You Win!! Congratulations!";
+    }
 }
 
-
-
-
-
-
-
-
-
-startquiz();
-
-
-
-
-
-
-
+startQuiz();
