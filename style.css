@@ -1,91 +1,69 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f1f1f1;
+    background: #f2f2f2;
     text-align: center;
-    padding: 50px;
 }
 
 .app {
     max-width: 600px;
-    margin: auto;
-    background-color: #fff;
-    border-radius: 10px;
+    margin: 50px auto;
+    background: white;
     padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-h1 {
-    color: #333;
-}
-
-h2 {
-    margin-bottom: 20px;
-}
-
-.btn-container {
+#answer-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-button {
+.btn {
     padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007BFF;
+    color: white;
     font-size: 16px;
     cursor: pointer;
-    border: 2px solid #333;
-    border-radius: 5px;
-    background-color: #fff;
-    transition: all 0.2s ease;
-    opacity: 0;
-    transform: translateY(20px);
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-button:hover {
-    background-color: #f0f0f0;
+.btn:hover {
+    transform: scale(1.05);
 }
 
-button.correct {
-    background-color: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
+.btn.correct {
+    background-color: #28a745;
 }
 
-button.inCorrect {
-    background-color: #f44336;
-    color: white;
-    border-color: #f44336;
+.btn.incorrect {
+    background-color: #dc3545;
 }
 
-button.show {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-#button2 {
-    padding: 10px 30px;
+#next-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
     font-size: 16px;
-    margin-top: 10px;
-    border-radius: 5px;
     border: none;
-    background-color: #2196F3;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #17a2b8;
     color: white;
+    transition: transform 0.2s;
 }
 
-#button2:hover {
-    background-color: #1976D2;
+#next-btn:hover {
+    transform: scale(1.05);
 }
 
-/* Animation for question container */
-.quiz {
-    transition: opacity 0.5s ease;
+.fade {
+    animation: fadeIn 0.5s;
 }
 
-.fade-out {
-    opacity: 0;
-}
-
-.fade-in {
-    opacity: 1;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
 }
